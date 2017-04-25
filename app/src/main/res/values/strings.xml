@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">U.T.S.M.</string>
+    <string name="action_settings">Settings</string>
+    <string name="chad">Chad</string>
+
+    <array name="month">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </array>
+
+    <array name="part">
+        <item>P1</item>
+        <item>P2</item>
+    </array>
+
+</resources>
