@@ -14,12 +14,9 @@ import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.trienoir.ultimatetimesheetmaker.enums.TimeFormat;
-import com.trienoir.ultimatetimesheetmaker.interfaces.RefreshTimeInterface;
-import com.trienoir.ultimatetimesheetmaker.utilities.CalendarTime;
 import com.trienoir.ultimatetimesheetmaker.R;
+import com.trienoir.ultimatetimesheetmaker.utilities.CalendarTime;
 import com.trienoir.ultimatetimesheetmaker.utilities.ReadWriteExcelFile;
-import com.trienoir.ultimatetimesheetmaker.utilities.RefreshTime;
 import com.trienoir.ultimatetimesheetmaker.views.AttendanceView;
 
 import java.io.IOException;
@@ -32,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     FrameLayout attendanceLayout;
     AttendanceView attendanceView;
     private CalendarTime calendarTime;
-    //private RefreshTime refreshTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +51,6 @@ public class MainActivity extends AppCompatActivity {
         attendanceLayout.addView(attendanceView);
 
         calendarTime = new CalendarTime();
-//        refreshTime = new RefreshTime();
-//        refreshTime.setRefreshTimeInterface(new RefreshTimeInterface() {
-//            @Override
-//            public void onRefresh() {
-//                currentTime.setText(calendarTime.getValue(TimeFormat.TIME));
-//                currentDay.setText(calendarTime.getValue(TimeFormat.DAY));
-//                currentDate.setText(calendarTime.getValue(TimeFormat.DATE));
-//            }
-//        });
 
         tapToGo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.v("TAG", "path: " + path);
                         ReadWriteExcelFile.readExcelFile(MainActivity.this, path);
                     }
-                    catch (URISyntaxException e) { e.printStackTrace(); }
-                    catch (IOException e) { e.printStackTrace(); }
+                    catch (URISyntaxException | IOException e) { e.printStackTrace(); }
                 }
                 break;
         }

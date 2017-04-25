@@ -3,7 +3,6 @@ package com.trienoir.ultimatetimesheetmaker.views;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -31,14 +30,14 @@ import java.util.List;
  */
 public class AttendanceView extends FrameLayout {
 
-    ListView attendanceList;
-    AttendanceListAdapter listAdapter;
-    Button startDate, endDate, sortDate, exportDate;
+    private ListView attendanceList;
+    private AttendanceListAdapter listAdapter;
+    private Button startDate, endDate, sortDate, exportDate;
 
-    CalendarTime calendarTime;
+    private CalendarTime calendarTime;
 
-    List<Attendance> attendances;
-    int value;
+    private List<Attendance> attendances;
+    private int value;
 
     boolean isAscending = true;
 
@@ -64,14 +63,13 @@ public class AttendanceView extends FrameLayout {
         calendarTime.initCalendar();
 
         DatabaseCommands.InitDao(getContext());
-//        attendances = DatabaseCommands.ReadAllAttendance();
         attendances = DatabaseCommands.GetMonthlySort();
+        DatabaseCommands.AddAllNotAddedAttendanceDate();
         switch (value) {
             case 1:
                 DatabaseCommands.RegisterTimeIn(new RefreshListInterface() {
                     @Override
                     public void onDatabaseUpdate(Attendance attendance) {
-//                        attendances = DatabaseCommands.ReadAllAttendance();
                         attendances = DatabaseCommands.GetMonthlySort();
                         initListAndAdapter();
                         showToast(getContext(), "SET TIME_IN TO: " + attendance.getTimeIn());
@@ -82,7 +80,6 @@ public class AttendanceView extends FrameLayout {
                 DatabaseCommands.RegisterTimeOut(new RefreshListInterface() {
                     @Override
                     public void onDatabaseUpdate(Attendance attendance) {
-//                        attendances = DatabaseCommands.ReadAllAttendance();
                         attendances = DatabaseCommands.GetMonthlySort();
                         initListAndAdapter();
                         showToast(getContext(), "SET TIME_OUT TO: " + attendance.getTimeOut());
@@ -98,14 +95,12 @@ public class AttendanceView extends FrameLayout {
                         new AlertInterface() {
                             @Override
                             public void PositiveMethod(DialogInterface dialog, int id) {
-//                                attendances = DatabaseCommands.ReadAllAttendance();
                                 attendances = DatabaseCommands.GetMonthlySort();
                                 initListAndAdapter();
                             }
 
                             @Override
                             public void NegativeMethod(DialogInterface dialog, int id) {
-//                                attendances = DatabaseCommands.ReadAllAttendance();
                                 attendances = DatabaseCommands.GetMonthlySort();
                                 initListAndAdapter();
                             }
@@ -113,12 +108,10 @@ public class AttendanceView extends FrameLayout {
 
                 break;
             default:
-//                DatabaseCommands.AddDefaultAttendance(new RefreshListInterface() {
-//                    @Override
-//                    public void onDatabaseUpdate(attendance attendance) {
-//                        initListAndAdapter();
-//                    }
-//                });
+//                DatabaseCommands.AddAttendance("2017-01-01", "09:00 AM", "06:00 PM", "");
+
+
+                attendances = DatabaseCommands.GetMonthlySort();
                 initListAndAdapter();
                 break;
         }

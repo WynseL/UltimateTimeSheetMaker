@@ -3,17 +3,15 @@ package com.trienoir.ultimatetimesheetmaker.utilities;
 import android.content.Context;
 import android.util.Log;
 
-import com.trienoir.ultimatetimesheetmaker.database.DaoMaster;
-import com.trienoir.ultimatetimesheetmaker.database.DaoSession;
 import com.trienoir.ultimatetimesheetmaker.database.Attendance;
 import com.trienoir.ultimatetimesheetmaker.database.AttendanceDao;
+import com.trienoir.ultimatetimesheetmaker.database.DaoMaster;
+import com.trienoir.ultimatetimesheetmaker.database.DaoSession;
 import com.trienoir.ultimatetimesheetmaker.enums.TimeFormat;
 import com.trienoir.ultimatetimesheetmaker.interfaces.RefreshListInterface;
 
 import java.util.Date;
 import java.util.List;
-
-import de.greenrobot.dao.query.WhereCondition;
 
 /**
  * Created by TrieNoir on 17/02/2016.
@@ -126,6 +124,30 @@ public class DatabaseCommands {
             if (attendance.getDate().equals(calendarTime.getValue(TimeFormat.DATE))) { return true; }
         }
         return false;
+    }
+
+    public static void AddAllNotAddedAttendanceDate() {
+        List<Attendance> attendances = ReadAllAttendance();
+        if (!attendances.isEmpty()) {
+            if (!CheckIfDateExistsOnDB()) {
+                Attendance attendance = attendances.get(attendances.size() - 1);
+                String lastAddedDate = attendance.getDate();
+                String currentDate = calendarTime.getValue(TimeFormat.DATE);
+                if (calendarTime.isDateAfter(currentDate, lastAddedDate)) {
+                    int increment = 0;
+                    boolean isLastAddedAndCurrentDateEqual;
+                    do {
+                        increment++;
+                        String addedDate = calendarTime.incrementDateByDay(lastAddedDate, increment);
+                        AddAttendance(addedDate, "", "", "");
+                        isLastAddedAndCurrentDateEqual = currentDate.equals(addedDate);
+                    }
+                    while (!isLastAddedAndCurrentDateEqual);
+                }
+            }
+        } else {
+            AddDefaultAttendance();
+        }
     }
 
     public static void AddDefaultAttendance(RefreshListInterface refreshListInterface) {

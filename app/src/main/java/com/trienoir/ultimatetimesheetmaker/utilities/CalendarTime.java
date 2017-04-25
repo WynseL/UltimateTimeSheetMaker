@@ -1,5 +1,7 @@
 package com.trienoir.ultimatetimesheetmaker.utilities;
 
+import android.util.Log;
+
 import com.trienoir.ultimatetimesheetmaker.enums.TimeFormat;
 
 import java.text.ParseException;
@@ -34,6 +36,54 @@ public class CalendarTime {
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat(strFormat);
         return dateFormat.format(calendar.getTime());
+    }
+
+    public String incrementDateByDay(String date, int increment) {
+        try {
+            String inputPattern = "yyyy-MM-dd";
+            SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+            calendar.setTime(inputFormat.parse(date));
+            calendar.add(Calendar.DATE, increment);
+            return inputFormat.format(calendar.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.e(Constants.TAG, e.toString());
+            return null;
+        }
+    }
+
+    public boolean isDateBefore(String strDate1, String strDate2) {
+        String inputPattern = "yyyy-MM-dd";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+
+        Date date1 = null;
+        Date date2 = null;
+
+        try {
+            date1 = inputFormat.parse(strDate1);
+            date2 = inputFormat.parse(strDate2);
+            if (date1.before(date2)) { return true; }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isDateAfter(String strDate1, String strDate2) {
+        String inputPattern = "yyyy-MM-dd";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+
+        Date date1 = null;
+        Date date2 = null;
+
+        try {
+            date1 = inputFormat.parse(strDate1);
+            date2 = inputFormat.parse(strDate2);
+            if (date1.after(date2)) { return true; }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public String parseDateToExcel(String time) {

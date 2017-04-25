@@ -4,9 +4,9 @@ ULTIMATE TIME SHEET MAKER (U.T.S.M.)
 Personal ultimatum time sheet maker ;D
 
 # Libraries used:
-	- GreenDao 2.1.0
-	- opencsv 3.7
-	- poi 3.13
+	- greenDao 3.2.0
+	- opencsv 3.9
+	- poi 3.16
 
 # Features:
 	- Import/export of excel files

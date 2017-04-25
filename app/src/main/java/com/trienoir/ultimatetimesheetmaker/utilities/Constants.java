@@ -6,8 +6,9 @@ package com.trienoir.ultimatetimesheetmaker.utilities;
 
 public class Constants {
 
-    static final String[] TO_RECEIVER = new String[]{""};
-    static final String[] CC_RECEIVER = new String[]{""};
-    static final String[] BCC_RECEIVER = new String[]{""};
+    public static final String TAG = "|U|T|S|M|";
+    public static final String[] TO_RECEIVER = new String[]{""};
+    public static final String[] CC_RECEIVER = new String[]{""};
+    public static final String[] BCC_RECEIVER = new String[]{""};
 
 }
