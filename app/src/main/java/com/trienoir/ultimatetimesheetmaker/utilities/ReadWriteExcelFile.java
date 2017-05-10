@@ -236,14 +236,15 @@ public class ReadWriteExcelFile {
         emailIntent.putExtra(android.content.Intent.EXTRA_CC, Constants.CC_RECEIVER);
         emailIntent.putExtra(android.content.Intent.EXTRA_BCC, Constants.BCC_RECEIVER);
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, EmailSubject);
-        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, String.format(Constants.BODY, "[name]", "[start MMMM dd]", "[end MMMM dd]"));
         emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + location));
 
         final PackageManager pm = context.getPackageManager();
         final List<ResolveInfo> matches = pm.queryIntentActivities(emailIntent, 0);
         ResolveInfo best = null;
         for (final ResolveInfo info : matches) {
-            if (info.activityInfo.packageName.endsWith(".gm") || info.activityInfo.name.toLowerCase().contains("gmail")) { best = info; }
+            if (info.activityInfo.packageName.endsWith(".gm") ||
+                    info.activityInfo.name.toLowerCase().contains("gmail")) { best = info; }
         }
         if (best != null) { emailIntent.setClassName(best.activityInfo.packageName, best.activityInfo.name); }
         context.startActivity(emailIntent);
